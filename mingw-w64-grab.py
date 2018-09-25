@@ -76,8 +76,11 @@ def find_dependencies():
 def install(package):
     print("Installing : %s" % package)
     if not package in pkgs:
-        print('Unable to find "%s", skipping' % package)
-        return
+        git_package = package + "-git"
+        if not git_package in pkgs:
+            print('Unable to find "%s", skipping' % package)
+            return
+        package = git_package
     filename, done = download_pkg(package, pkgs)
 
     if done:
@@ -88,8 +91,6 @@ def install(package):
     deps = find_dependencies()
 
     for dep in deps:
-        if dep == '%s-gcc-libs' % platform:
-            continue
         install(dep)
 
 
