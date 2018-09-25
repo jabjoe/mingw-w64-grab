@@ -7,8 +7,7 @@ import requests
 import math
 import sys
 
-
-target = 'x86_64'
+target = os.environ["MINGW_TARGET"] if "MINGW_TARGET" in os.environ else 'i686'
 
 platform = 'mingw-w64-%s' % target
 
@@ -106,6 +105,7 @@ def list_pkgs():
 
 if len(sys.argv) < 2:
     print("Please give command : list or install <package>")
+    print("Environment Variable MINGW_TARGET for i686 or x86_64")
     sys.exit(-1)
 
 cmds = {"list": list_pkgs, "install" : lambda : install(sys.argv[2])}
