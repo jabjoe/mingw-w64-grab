@@ -100,8 +100,9 @@ pkgs = get_pkg_links(url, ext)
 
 
 def list_pkgs():
+    needless = "%s-" % platform
     for pkg in pkgs:
-        print(pkg, pkgs[pkg])
+        print("%s - url:%s" % (pkg.replace(needless,""), pkgs[pkg]))
 
 
 if len(sys.argv) < 2:
@@ -109,7 +110,7 @@ if len(sys.argv) < 2:
     print("Environment Variable MINGW_TARGET for i686 or x86_64")
     sys.exit(-1)
 
-cmds = {"list": list_pkgs, "install" : lambda : install(sys.argv[2])}
+cmds = {"list": list_pkgs, "install" : lambda : install("%s-%s" % (platform, sys.argv[2]))}
 
 cmd = sys.argv[1]
 
